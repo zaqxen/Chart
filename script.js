@@ -1,5 +1,5 @@
 var myCanvas = document.getElementById("myCanvas");
-myCanvas.width = 300;
+myCanvas.width = 600;
 myCanvas.height = 300;
 var ctx = myCanvas.getContext("2d");
 function drawLine(ctx, startX, startY, endX, endY,color){
@@ -21,7 +21,11 @@ var myVinyls = {
 	"Classical music": 10,
 	"Alternative rock": 14,
 	"Pop": 2,
-	"Jazz": 12
+	"Jazz": 12,
+	"A": 10,
+	"B": 14,
+	"C": 2,
+	"D": 12
 };
 var Barchart = function(options){
 	this.options = options;
@@ -60,11 +64,11 @@ var Barchart = function(options){
 				lineColor
 			);
 			//writing grid markers
-			/*this.ctx.save();
-			this.ctx.fillStyle = this.options.gridColor;
+			this.ctx.save();
+			this.ctx.fillStyle = "#888888";
 			this.ctx.font = "bold 10px Arial";
-			this.ctx.fillText(gridValue, 10,gridY - 2);
-			this.ctx.restore();*/
+			this.ctx.fillText(gridValue, 5,gridY - 4);
+			this.ctx.restore();
 			gridValue+=this.options.gridScale;
 		}
 		//drawing the bars
@@ -84,20 +88,42 @@ var Barchart = function(options){
 				barHeight,
 				'rgba(0, 0, 255, 0.5)'
 			);
+
+			x = x + 20;
+			// Label on each bottom of the Bar
 			this.ctx.restore();
 			this.ctx.fillStyle = "#000000";
-			this.ctx.font = "bold 11px Arial";
-			this.ctx.fillText(categ.substr(0,10), x, this.canvas.height - 15 );
+			this.ctx.font = "normal 10px Arial";
+			this.ctx.textAlign = "center";
+			if(categ.indexOf(" ") > 1)
+			{
+				var LabelArray = categ.split(' ');
+
+				var label_y = this.canvas.height - 15;
+				for(var i = 0; i < LabelArray.length; i++)
+				{
+					this.ctx.fillText(LabelArray[i], x, label_y);
+					label_y = label_y + 10;
+				}
+			}
+			else
+			{
+				this.ctx.fillText(categ, x, this.canvas.height - 15 );
+			}
+			
+			// Number Value on Each Bar
+			x = x - 10;
 			this.ctx.restore();
 			this.ctx.font = "normal 11px Arial";
+			this.ctx.textAlign = "center";
 			if( barHeight <= 24){
 				this.ctx.fillStyle = "rgba(0, 0, 255, 0.6)";
 				this.ctx.fillText(val, x + 10, y - 5 );
-				}
+			}
 			else{
 				this.ctx.fillStyle = "#FFFFFF";
 				this.ctx.fillText(val, x + 10, y + 15 );
-				}
+			}
 			this.ctx.restore();
 			barIndex++;
 		}
