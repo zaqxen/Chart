@@ -88,7 +88,7 @@ var Barchart = function(options){
 			this.ctx.fillText(categ.substr(0,10), x, this.canvas.height - 15 );
 			this.ctx.restore();
 			this.ctx.font = "normal 11px Arial";
-			if( barHeight <= 25){
+			if( barHeight <= 24){
 				this.ctx.fillStyle = "rgba(0, 0, 255, 0.6)";
 				this.ctx.fillText(val, x + 10, y - 5 );
 				}
