@@ -27,6 +27,8 @@ var Barchart = function(options){
 	this.options = options;
 	this.canvas = options.canvas;
 	this.ctx = this.canvas.getContext("2d");
+	this.ctx.fillStyle = "#FFFFFF";
+	this.ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
 	//this.colors = options.colors;
 	this.draw = function(){
 		var maxValue = 0;
