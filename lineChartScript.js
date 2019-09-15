@@ -2,7 +2,6 @@ var MakeChart = function(d,c,t){
 	var enumCount = Object.keys(d).length;
 	c.width = (60 * enumCount) + 65;
 	c.height = 320;
-	var ctx = c.getContext("2d");
 	function drawLine(ctx, startX, startY, endX, endY,color){
 		ctx.save();
 		ctx.strokeStyle = color;
@@ -13,7 +12,7 @@ var MakeChart = function(d,c,t){
 		ctx.restore();
 	}
 	
-	class BarChart {
+	class LineChart {
 		constructor(opt) {
 			var ChartX = 15; // To adjust the Entire Chart X Axis 
 			var ChartY = 10; // To adjust the Entire Chart Y Axis 
@@ -164,7 +163,7 @@ var MakeChart = function(d,c,t){
 		return (num / si[i].value).toFixed(0).replace(rx, "$1") + si[i].symbol;
 	}
 	
-	new BarChart({
+	new LineChart({
 			padding:35
 		}).draw();
 }
