@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	    <meta content="utf-8" http-equiv="encoding">
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
 		<title>Canvas Chart</title>
-		<script type="text/javascript" src="barChartScript.js"></script>
+		<script type="text/javascript" src="barChartScript.js?rf=2"></script>
 	</head>
 <body>
-	<canvas id="HtmlCanvas" ></canvas>
-	<canvas id="HtmlCanvas2" ></canvas>
+	<canvas id="HtmlCanvas"></canvas>
+	<canvas id="HtmlCanvas2"></canvas>
 	<script>
 		var ChartData = {
 			"Classical music": 10,
 			"Alternative rock": 140,
 			"Pop": 2,
-		"Jazz": 12
-		,"United Arab Emirates": 15314,"B3": 14,"C4": 2343,"D5": 12310
+			"Jazz": 122
+			,"United Arab Emirates": 15314,"B3": 14,"C4": 2343,"D5": 12310
 			};
 			var ChartData2 = {
 			"Classical": 105,
 			"Alternative": 1440,
 			"Pop": 225,
-		"Jazz": 1222
-		,"United Arab Emirates": 12314
+			"Jazz": 1222
+			,"United Arab Emirates": 12314
 			};
-		
-	   (function() {
+		(function() {
 		var canvas = document.getElementById("HtmlCanvas");
 		var canvas2 = document.getElementById("HtmlCanvas2");
 		new MakeChart(ChartData,canvas,"Chart 1");
