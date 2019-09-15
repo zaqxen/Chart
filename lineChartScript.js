@@ -1,6 +1,6 @@
 var MakeChart = function(d,c,t){
 	var enumCount = Object.keys(d).length;
-	c.width = (60 * enumCount) + 60;
+	c.width = (60 * enumCount) + 65;
 	c.height = 320;
 	var ctx = c.getContext("2d");
 	function drawLine(ctx, startX, startY, endX, endY,color){
@@ -48,9 +48,9 @@ var MakeChart = function(d,c,t){
 					if (gridValue == 0)
 						lineColor = "#000";
 					else if (alt)
-						lineColor = "#777";
+						lineColor = "#AAA";
 					else
-						lineColor = "#CCC";
+						lineColor = "#DDD";
 					alt = !alt;
 					drawLine(this.ctx, 20 + ChartX, gridY, this.canvas.width - 30 + ChartX, gridY, lineColor);
 					//writing grid markers (numbers on left side)
@@ -78,21 +78,21 @@ var MakeChart = function(d,c,t){
 					if(curX ==0) curX = x + ChartX;
 
 					this.ctx.save();
-					this.ctx.lineWidth = 3;
-					drawLine(this.ctx, curX, curY, x + ChartX, y, 'rgba(0, 50, 255, 0.7)')
+					this.ctx.lineWidth = 2;
+					drawLine(this.ctx, curX, curY, x + ChartX, y, 'rgba(0, 50, 255, 0.4)')
 					
+					curX = x + ChartX;
+					curY = y;
+
 					//drawing the Point Circle
-					this.ctx.strokeStyle = 'rgba(0, 80, 255, 1)';
-					this.ctx.lineWidth = 4;
+					this.ctx.save();
+					//this.ctx.strokeStyle = 'rgba(0, 50, 255, 0.8)';
+					this.ctx.strokeStyle = '#DC4C3F';
+					this.ctx.lineWidth = 3;
 					this.ctx.beginPath();
 					this.ctx.arc(curX, curY, 2, 2, 3 * Math.PI);
 					this.ctx.stroke();
 
-					curX = x + ChartX;
-					curY = y;
-					this.ctx.beginPath();
-					this.ctx.arc(curX, curY, 2, 2, 3 * Math.PI);
-					this.ctx.stroke();
 					x = x + 20 + ChartX;
 					// Label on each line
 					this.ctx.restore();
@@ -103,23 +103,31 @@ var MakeChart = function(d,c,t){
 						var LabelArray = ChartEnum.split(' ');
 						var label_y = this.canvas.height - 15 - ChartY;
 						for (var i = 0; i < LabelArray.length; i++) {
-							this.ctx.fillText(LabelArray[i], x, label_y);
+							this.ctx.fillText(LabelArray[i], x - 21, label_y);
 							label_y = label_y + 10;
 						}
 					}
 					else {
-						this.ctx.fillText(ChartEnum, x, this.canvas.height - 15 - ChartY);
+						this.ctx.fillText(ChartEnum, x - 21, this.canvas.height - 15 - ChartY);
 					}
+
+					// Dotted Line
+					this.ctx.save();
+					this.ctx.lineWidth = 1;
+					this.ctx.setLineDash([3, 3]);/*Dash width and spaces between dashes.*/
+					drawLine(this.ctx, curX, curY, curX, this.canvas.height - this.opt.padding - ChartY, 'rgba(5, 5, 5, 0.3)')
+					this.ctx.restore();
+
 					// Number Value on Each Line
 					x = x - 10;
 					this.ctx.save();
 					this.ctx.font = "bold 11px Arial";
 					this.ctx.textAlign = "center";
 					this.ctx.fillStyle = "black";
-					this.ctx.shadowOffsetX = 2;
-					this.ctx.shadowOffsetY = 2;
-					this.ctx.shadowColor = "#888";
-					this.ctx.shadowBlur = 2;
+					this.ctx.shadowOffsetX = 0;
+					this.ctx.shadowOffsetY = 0;
+					this.ctx.shadowColor = "#AAA";
+					this.ctx.shadowBlur = 3;
 					this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), curX + 	0, curY - 8);
 					this.ctx.restore();
 					barIndex++;
