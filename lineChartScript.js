@@ -1,4 +1,4 @@
-var MakeChart = function(d,c,t){
+var MakeLineChart = function(d,c,t){
 	var enumCount = Object.keys(d).length;
 	c.width = (60 * enumCount) + 65;
 	c.height = 320;

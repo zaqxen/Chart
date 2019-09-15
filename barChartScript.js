@@ -1,4 +1,4 @@
-var MakeChart = function(d,c,t){
+var MakeBarChart = function(d,c,t){
 	var enumCount = Object.keys(d).length;
 	c.width = (60 * enumCount) + 60;
 	c.height = 320;

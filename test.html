@@ -4,7 +4,8 @@
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
 		<title>Canvas Chart</title>
-		<script type="text/javascript" src="lineChartScript.js?rf=2"></script>
+		<script type="text/javascript" src="lineChartScript.js"></script>
+		<script type="text/javascript" src="barChartScript.js"></script>
 	</head>
 <body>
 	<canvas id="HtmlCanvas"></canvas>
@@ -27,8 +28,8 @@
 		(function() {
 		var canvas = document.getElementById("HtmlCanvas");
 		var canvas2 = document.getElementById("HtmlCanvas2");
-		new MakeChart(ChartData,canvas,"Chart 1");
-		new MakeChart(ChartData2,canvas2,"Chart 2");
+		new MakeLineChart(ChartData,canvas,"Line Chart");
+		new MakeBarChart(ChartData2,canvas2,"Column Chart");
 		})();
 	</script>
 </body>
