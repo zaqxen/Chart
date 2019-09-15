@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<meta content="utf-8" http-equiv="encoding">
+	    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	    <meta content="utf-8" http-equiv="encoding">
 		<title>Canvas Chart</title>
-		<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>-->
+		<script type="text/javascript" src="barChartScript.js"></script>
 	</head>
 <body>
 	<canvas id="HtmlCanvas" ></canvas>
 	<canvas id="HtmlCanvas2" ></canvas>
-	<script type="text/javascript" src="barChartScript.js"></script>
 	<script>
 		var ChartData = {
 			"Classical music": 10,
 			"Alternative rock": 140,
-			//"Pop": 2,
-		//"Jazz": 12
-		//,"United Arab Emirates": 15314,"B3": 14,"C4": 2343,"D5": 12310
+			"Pop": 2,
+		"Jazz": 12
+		,"United Arab Emirates": 15314,"B3": 14,"C4": 2343,"D5": 12310
 			};
 			var ChartData2 = {
 			"Classical": 105,
@@ -25,9 +24,10 @@
 		"Jazz": 1222
 		,"United Arab Emirates": 12314
 			};
+		
+	   (function() {
 		var canvas = document.getElementById("HtmlCanvas");
 		var canvas2 = document.getElementById("HtmlCanvas2");
-	   (function() {
 		new MakeChart(ChartData,canvas,"Chart 1");
 		new MakeChart(ChartData2,canvas2,"Chart 2");
 		})();
