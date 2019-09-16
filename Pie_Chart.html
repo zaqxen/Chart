@@ -36,7 +36,7 @@ function drawCoordinates(x,y){
 	ctx.beginPath();
 	ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
 	ctx.fill();
-	var computeX =  100 * Math.floor(Math.PI * 1.7,2) - x;
+	var computeX =  100 * Math.floor(Math.PI * 1,2) - x;
 	var computeY =  125 * Math.floor(Math.PI * 1.7,2) - y;
 	ctx.fillText(x + "-" + y + ":[" + computeX + "," + computeY + "]", x,y);
 }
