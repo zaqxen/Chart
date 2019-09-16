@@ -22,8 +22,8 @@ var MakeLineChart = function(d,c,t){
 			this.ctx = c.getContext("2d");
 			this.ctx.translate(0.5, 0.5);
 			//Chart BackgroundColor START
-			//this.ctx.fillStyle = "#F0F0F0"; 
-			//this.ctx.fillRect(0, 0, c.width, c.height);
+			this.ctx.fillStyle = "rgba(150, 150, 150, 0.1)"; 
+			this.ctx.fillRect(0, 0, c.width, c.height);
 			//Chart BackgroundColor END
 			this.draw = function () {
 				var TopValue = 0;
@@ -100,20 +100,20 @@ var MakeLineChart = function(d,c,t){
 					this.ctx.textAlign = "center";
 					if (ChartEnum.indexOf(" ") > 1) {
 						var LabelArray = ChartEnum.split(' ');
-						var label_y = this.canvas.height - 15 - ChartY;
+						var label_y = this.canvas.height - 20 - ChartY;
 						for (var i = 0; i < LabelArray.length; i++) {
 							this.ctx.fillText(LabelArray[i], x - 21, label_y);
 							label_y = label_y + 10;
 						}
 					}
 					else {
-						this.ctx.fillText(ChartEnum, x - 21, this.canvas.height - 15 - ChartY);
+						this.ctx.fillText(ChartEnum, x - 21, this.canvas.height - 20 - ChartY);
 					}
 
 					// Dotted Line
 					this.ctx.save();
 					this.ctx.lineWidth = 1;
-					this.ctx.setLineDash([3, 3]);/*Dash width and spaces between dashes.*/
+					this.ctx.setLineDash([1, 2]);/*Dash width and spaces between dashes.*/
 					drawLine(this.ctx, curX, curY, curX, this.canvas.height - this.opt.padding - ChartY, 'rgba(5, 5, 5, 0.3)')
 					this.ctx.restore();
 
@@ -145,22 +145,22 @@ var MakeLineChart = function(d,c,t){
 	
 	function nShort(num) {
 		var si = [
-			{ value: 1, symbol: "" },
-			{ value: 1E3, symbol: "K" },
-			{ value: 1E6, symbol: "M" },
-			{ value: 1E9, symbol: "B" },
-			{ value: 1E12, symbol: "T" },
-			{ value: 1E15, symbol: "Q" },
-			{ value: 1E18, symbol: "P" }
+			{ v: 1, s: "" },
+			{ v: 1E3, s: "K" },
+			{ v: 1E6, s: "M" },
+			{ v: 1E9, s: "B" },
+			{ v: 1E12, s: "T" },
+			{ v: 1E15, s: "Q" },
+			{ v: 1E18, s: "P" }
 		];
 		var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
 		var i;
 		for (i = si.length - 1; i > 0; i--) {
-			if (num >= si[i].value) {
+			if (num >= si[i].v) {
 				break;
 			}
 		}
-		return (num / si[i].value).toFixed(0).replace(rx, "$1") + si[i].symbol;
+		return (num / si[i].v).toFixed(0).replace(rx, "$1") + si[i].s;
 	}
 	
 	new LineChart({
