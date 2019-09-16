@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pie Chart Clockwise</title>
+	</head>
+<body>
+<canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+ctx.fillText("Test",125,125);
+
+ctx.lineWidth = 100;
+
+ctx.strokeStyle = "red";
+ctx.beginPath();
+ctx.arc(150, 150, 50, 1.7 * Math.PI, 0 * Math.PI);
+ctx.stroke();
+
+ctx.strokeStyle = "green";
+ctx.beginPath();
+ctx.arc(150, 150, 50, 1.2 * Math.PI, 1.7 * Math.PI);
+ctx.stroke();
+
+ctx.strokeStyle = "blue";
+ctx.beginPath();
+ctx.arc(150, 150, 50, 0.5 * Math.PI, 1.2 * Math.PI);
+ctx.stroke();
+
+ctx.strokeStyle = "yellow";
+ctx.beginPath();
+ctx.arc(150, 150, 50, 0 * Math.PI, 0.5 * Math.PI);
+ctx.stroke();
+
+ctx.restore();
+ctx.fillStyle = "#FFF";
+ctx.font = "bold 10px Arial";
+ctx.fillText("Test",125,125);
+</script>
+</body>
+</html>
