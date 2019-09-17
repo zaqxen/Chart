@@ -62,16 +62,16 @@ var MakeLineChart = function(d,c,t){
 				}
 				this.ctx.restore();
 				//drawing the line
-				var barIndex = 0;
-				var numberOfBars = Object.keys(d).length;
-				var barWidth = (ChartWidth) / numberOfBars;
+				var lineIndex = 0;
+				var numberOfLines = Object.keys(d).length;
+				var lineWidth = (ChartWidth) / numberOfLines;
 				var curX = 0;
 				var curY = 0;
 				for (ChartEnum in d) {
 					var val = d[ChartEnum];
-					var barHeight = Math.round(ChartHeight * val / TopValue);
-					var x = this.opt.padding + barIndex * barWidth;
-					var y = this.canvas.height - barHeight - this.opt.padding - ChartY;
+					var lineHeight = Math.round(ChartHeight * val / TopValue);
+					var x = this.opt.padding + lineIndex * lineWidth;
+					var y = this.canvas.height - lineHeight - this.opt.padding - ChartY;
 					
 					if(curY == 0) curY = y;
 					if(curX ==0) curX = x + ChartX;
@@ -129,7 +129,7 @@ var MakeLineChart = function(d,c,t){
 					this.ctx.shadowBlur = 3;
 					this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), curX + 	0, curY - 8);
 					this.ctx.restore();
-					barIndex++;
+					lineIndex++;
 				}
 				//drawing chart Title
 				this.ctx.save();
