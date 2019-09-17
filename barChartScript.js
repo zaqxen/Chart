@@ -49,7 +49,7 @@ var MakeBarChart = function(d,c,t){
 				var ChartWidth = this.canvas.width - this.opt.padding * 2 + ChartX;
 				//drawing the grid lines
 				var gridv = 0;
-				var lineColor = this.opt.gridColor;
+				var lineColor;
 				var alt = true;
 				this.ctx.save();
 				while (gridv <= Topv) {

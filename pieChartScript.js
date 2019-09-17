@@ -28,7 +28,7 @@ var MakePieChart = function(d,c,t){
 	//SeaGreen var Palettes = new Array("#2E8B57", "#66CDAA", "#4682B4", "#008B8B", "#5F9EA0", "#3CB371", "#48D1CC", "#B0C4DE", "#8FBC8B", "#87CEEB"
 	//BrightPastel var Palettes = new Array("#418CF0", "#FCB441", "#E0400A", "#056492", "#BFBFBF", "#1A3B69", "#FFE382", "#129CDD", "#CA6B4B", "#005CDB", "#F3D288", "#506381", "#F1B9A8", "#E0830A", "#7893BE"
 
-	function DrawPieSlice(sizeOfSlice, label)
+	function DrawPieSlice(sizeOfSlice, label, value, opt)
 	{
 		RemainingSlices = RemainingSlices - sizeOfSlice;
 		var StartingAngle = lastPostionOfSlice; 
@@ -59,10 +59,18 @@ var MakePieChart = function(d,c,t){
 		ctx.shadowColor = "#000";
 		ctx.shadowBlur = 5;
 	
+		// Writing the Text Labels
 		ctx.font = "normal 11px sans-serif";
 		var LabelPoint = (RemainingSlices + (sizeOfSlice/2)) * Math.PI;
 		if(!label) label = "";
 
+		var cValue = value;
+		if(!opt.hidePercent){
+			cValue = (sizeOfSlice * 100).toFixed(1) + "% " + value;
+		}
+		if(opt.showData == false){ 
+			cValue = (sizeOfSlice * 100).toFixed(1) + "%";
+		}
 		if((sizeOfSlice * 100) < 20){
 			ctx.fillStyle=Palettes[ColorIndex];
 			ctx.shadowColor = "#FFF";
@@ -70,29 +78,52 @@ var MakePieChart = function(d,c,t){
 			thePoint=PinPoint(CenterX,CenterY,ctx.lineWidth + 30,LabelPoint);
 
 			if (label.indexOf(" ") > 1) {
-				var LabelArray = label.split(' ');
-				var label_y = thePoint.y;
-				for (var i = 0; i < LabelArray.length; i++) {
-					if(i == 0) 
-						LabelArray[i] = (sizeOfSlice * 100).toFixed(1) + "% " + LabelArray[i];
-					ctx.fillText( LabelArray[i],thePoint.x,label_y);
-					label_y = label_y + 10;
+				var LabelSplit = label.split(' ');
+				if(opt.hideLabel == false){ 
+					var label_y = thePoint.y + 12;
+					for (var i = 0; i < LabelSplit.length; i++) {
+						ctx.fillText(LabelSplit[i],thePoint.x,label_y);
+						label_y = label_y + 10; // Move the next word to newline
+					}
 				}
+				ctx.fillText(cValue,thePoint.x,thePoint.y);
 			}
 			else {
-				ctx.fillText( label.split(' ')[1],thePoint.x,thePoint.y);
-				ctx.font = "normal 10px sans-serif";
-				ctx.fillText( (sizeOfSlice * 100).toFixed(1) + "% " + label.split(' ')[0] ,thePoint.x,thePoint.y - 12);
+				if(opt.hideLabel == false){
+					ctx.fillText( label,thePoint.x,thePoint.y);
+					ctx.font = "normal 10px sans-serif";
+					ctx.fillText(cValue,thePoint.x,thePoint.y - 12);
+				}
+				else{
+					ctx.fillText(cValue,thePoint.x,thePoint.y);
+				}
 			}
 		}
 		else{
 			ctx.fillStyle="white";
 			thePoint=PinPoint(CenterX,CenterY,(ctx.lineWidth - 38),LabelPoint);
-			ctx.fillText( label.split(' ')[1],thePoint.x,thePoint.y);
-			ctx.font = "normal 10px sans-serif";
-			ctx.fillText( (sizeOfSlice * 100).toFixed(1) + "% " + label.split(' ')[0] ,thePoint.x,thePoint.y - 12);
+			if(opt.hideLabel == false){
+				ctx.fillText( label,thePoint.x,thePoint.y);
+				ctx.font = "normal 10px sans-serif";
+				ctx.fillText(cValue ,thePoint.x,thePoint.y - 12);
+			}
+			else{
+				ctx.fillText(cValue,thePoint.x,thePoint.y);
+			}
 		}
-		
+
+		if(opt.showlLegend){
+			var LegendXPosition = (CenterX * 2) + 5;
+			var LegendYPosition = (ColorIndex * 15) + 80;
+			ctx.shadowBlur = 0;
+			ctx.shadowColor = "";
+			ctx.fillStyle=Palettes[ColorIndex];
+			ctx.fillRect(LegendXPosition + 10,LegendYPosition,20,10);
+			ctx.fillStyle="black";
+			ctx.font = "normal 10px sans-serif";
+			ctx.textAlign = "left";
+			ctx.fillText(label,LegendXPosition + 35,LegendYPosition + 9);
+		}
 		ctx.restore();
 	
 		lastPostionOfSlice = EndingAngle;
@@ -106,15 +137,19 @@ var MakePieChart = function(d,c,t){
 	}
 
 	class PieChart {
-		constructor() {
-			//CenterX = ctx.canvas.width /2; // To adjust the Entire Chart X Axis 
-			//CenterY = ctx.canvas.height /2; // To adjust the Entire Chart Y Axis 
+		constructor(opt) {
+			this.opt = opt;
 			this.canvas = c;
 			this.ctx = c.getContext("2d");
 			this.ctx.translate(0.5, 0.5);
+			if(this.opt.showlLegend)
+			{
+				CenterX = CenterY - 20;
+			}
 			//Chart BackgroundColor START
 			this.ctx.fillStyle = "rgba(150, 150, 150, 0.1)"; 
 			this.ctx.fillRect(0, 0, c.width, c.height);
+			
 			//Chart BackgroundColor END
 			this.draw = function () {
 				var TotalPie = 0;
@@ -122,13 +157,12 @@ var MakePieChart = function(d,c,t){
 					TotalPie = TotalPie + d[ChartEnum];
 				}
 				
-				//drawing the line
+				//drawing the Pie Slices
 				for (ChartEnum in d) {
 					var val = d[ChartEnum];
 					var Slice =  ((val / TotalPie) * 100).toFixed(2);
 					Slice = (2 * Slice / 100);
-					var Label  = nShort(val) + " " + ChartEnum;
-					DrawPieSlice(Slice,Label);
+					DrawPieSlice(Slice,ChartEnum,nShort(val) , this.opt);
 				}
 				//drawing chart Title
 				this.ctx.save();
@@ -139,6 +173,8 @@ var MakePieChart = function(d,c,t){
 				this.ctx.fillText(t, this.canvas.width / 2, 25);
 				this.ctx.restore();
 			};
+
+			
 		}
 	}
 	
@@ -162,5 +198,10 @@ var MakePieChart = function(d,c,t){
 		return (num / si[i].v).toFixed(0).replace(rx, "$1") + si[i].s;
 	}
 	
-	new PieChart().draw();
+	new PieChart({
+		showData:false,
+		hidePercent:false,
+		hideLabel:true,
+		showlLegend:true
+	}).draw();
 }
