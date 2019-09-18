@@ -200,7 +200,7 @@ var MakePieChart = function(d,c,t){
 	
 	new PieChart({
 		showData:false,
-		hidePercent:false,
+		hidePercent:true,
 		hideLabel:true,
 		showlLegend:true
 	}).draw();
