@@ -195,7 +195,10 @@ var MakePieChart = function(d,c,t){
 				break;
 			}
 		}
-		return (num / si[i].v).toFixed(0).replace(rx, "$1") + si[i].s;
+		if(si[i].s != "")
+			return (num / si[i].v).toFixed(1).replace(rx, "$1") + si[i].s;
+		else
+			return (num / si[i].v).toFixed(0).replace(rx, "$1") + si[i].s;
 	}
 	
 	new PieChart({

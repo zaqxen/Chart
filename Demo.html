@@ -12,7 +12,8 @@
   <script type="text/javascript" src="lineChartScript.js"></script>
   <script type="text/javascript" src="barChartScript.js"></script>
   <script type="text/javascript" src="pieChartScript.js"></script>
-
+  <script type="text/javascript" src="barChartMultiScript.js"></script>
+  
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Page level plugin CSS-->
@@ -140,7 +141,8 @@
 		<hr>
 		<canvas id="HtmlCanvas"></canvas>
 		<canvas id="HtmlCanvas2"></canvas>
-		<canvas id="HtmlCanvas3" width="470" height="320" ></canvas>
+    <canvas id="HtmlCanvas3" width="470" height="320" ></canvas>
+    <canvas id="HtmlCanvas4"></canvas>
 		<script>
 			var ChartData = {
 					"Classical music": 510
@@ -162,14 +164,24 @@
 					,"Samsung": 51520
 					,"Web Crawlers": 11228
 					,"Android": 9125
+        };
+        var ChartData4 = {
+					"Day 1": {"Data1":105,"Data2":134}
+					,"Day 2": {"Data1":1440,"Data2":321}
+					,"Day 3": {"Data1":525,"Data2":252}
+					,"Day 4": {"Data1":1222,"Data2":1324}
+          ,"Day 5": {"Data1":914,"Data2":321}
+          ,"Day 6": {"Data1":235,"Data2":513}
 				};
 			(function() {
 			var canvas = document.getElementById("HtmlCanvas");
 			var canvas2 = document.getElementById("HtmlCanvas2");
-			var canvas3 = document.getElementById("HtmlCanvas3");
+      var canvas3 = document.getElementById("HtmlCanvas3");
+      var canvas4 = document.getElementById("HtmlCanvas4");
 			new MakeLineChart(ChartData,canvas,"Line Chart");
 			new MakeBarChart(ChartData2,canvas2,"Column Chart");
-			new MakePieChart(ChartData3,canvas3,"Pie Chart");
+      new MakePieChart(ChartData3,canvas3,"Pie Chart");
+      new MakeMultiBarChart(ChartData4,canvas4,"Multi Column Chart");
 			
 			})();
 		</script>
@@ -216,13 +228,15 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+<script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>
 

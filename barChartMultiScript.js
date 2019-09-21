@@ -1,7 +1,9 @@
-var MakeBarChart = function(d,c,t){
+var MakeMultiBarChart = function(d,c,t){
 	var enumCount = Object.keys(d).length;
-	c.width = (60 * enumCount) + 60;
+	c.width = (40 * enumCount * 2) + 60;
 	c.height = 320;
+	var ColorIndex = 0;
+	var Palettes = new Array("#3366CC","#DC3912","#FF9900","#109618","#990099","#3B3EAC","#0099C6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#6633CC","#E67300","#8B0707","#329262","#5574A6","#3B3EAC");
 
 	function drawLine(ctx, startX, startY, endX, endY,color){
 		ctx.save();
@@ -23,7 +25,7 @@ var MakeBarChart = function(d,c,t){
 		ctx.restore();
 	};
 	
-	class BarChart {
+	class MultiBarChart {
 		constructor(opt) {
 			var ChartX = 15; // To adjust the Entire Chart X Axis 
 			var ChartY = 10; // To adjust the Entire Chart Y Axis 
@@ -39,7 +41,10 @@ var MakeBarChart = function(d,c,t){
 			this.draw = function () {
 				var Topv = 0;
 				for (var ChartEnum in d) {
-					Topv = Math.max(Topv, d[ChartEnum]);
+					var Edata = d[ChartEnum]
+					for (var SubEnum in Edata) {
+						Topv = Math.max(Topv, Edata[SubEnum]);
+					}
 				}
 				if (Topv >= 7) // This adjust the gridScale that it won't create excessive Y gridlines 
 				{
@@ -74,56 +79,57 @@ var MakeBarChart = function(d,c,t){
 				this.ctx.restore();
 				//drawing the bars
 				var barIndex = 0;
-				var numberOfBars = Object.keys(d).length;
+				var numberOfBars = Object.keys(d).length * 2;
 				var barWidth = (ChartWidth) / numberOfBars;
-				for (ChartEnum in d) {
-					var val = d[ChartEnum];
-					var barHeight = Math.round(ChartHeight * val / Topv);
-					var x = this.opt.padding + barIndex * barWidth;
-					var y = this.canvas.height - barHeight - this.opt.padding - ChartY;
-					drawBar(this.ctx, x + ChartX, y, barWidth - 20, barHeight, 'rgba(0, 50, 255, 1)');
-					x = x + 20 + ChartX;
-					// Label on each bottom of the Bar
-					this.ctx.restore();
-					this.ctx.fillStyle = "#000000";
-					this.ctx.font = "normal 10px Arial";
-					this.ctx.textAlign = "center";
-					if (ChartEnum.indexOf(" ") > 1) {
-						var LabelArray = ChartEnum.split(' ');
-						var label_y = this.canvas.height - 20 - ChartY;
-						for (var i = 0; i < LabelArray.length; i++) {
-							this.ctx.fillText(LabelArray[i], x, label_y);
-							label_y = label_y + 10;
-						}
-					}
-					else {
-						this.ctx.fillText(ChartEnum, x, this.canvas.height - 20 - ChartY);
-					}
-					// Number v on Each Bar
-					x = x - 10;
-					this.ctx.font = "normal 11px Arial";
-					this.ctx.textAlign = "center";
-					if (barHeight <= 24) {
-						this.ctx.fillStyle = "rgba(0, 0, 255, 0.6)";
-						this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), x + 10, y - 5);
-					}
-					else {
-						this.ctx.fillStyle = "#FFFFFF";
-						if (val >= 100000) { // Writes the vs Vertically since it will not fit the container
-							this.ctx.save();
-							ctx.textBaseline = "bottom";
-							this.ctx.translate(0, 0);
-							this.ctx.rotate(Math.PI / 2);
-							this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), y + 32, -x - 5);
+				for (var ChartEnum in d) {
+					var Edata = d[ChartEnum]
+					console.log(ChartEnum);
+					ColorIndex = 0;
+					for (var SubEnum in Edata) {
+						console.log(SubEnum);console.log(Edata[SubEnum]);
+						//Topv = Math.max(Topv, Edata[SubEnum]);
+
+						var val = Edata[SubEnum];
+						var barHeight = Math.round(ChartHeight * val / Topv);
+						var x = this.opt.padding + barIndex * barWidth;
+						if(ColorIndex != 0) x = this.opt.padding - 15 + barIndex * barWidth;
+						var y = this.canvas.height - barHeight - this.opt.padding - ChartY;
+						drawBar(this.ctx, x + ChartX, y, barWidth - 20, barHeight, Palettes[ColorIndex]);
+						x = x + 20 + ChartX;
+
+
+						if(ColorIndex != 0){
+							// Label on each bottom of the Bar
 							this.ctx.restore();
+							this.ctx.fillStyle = "#000000";
+							this.ctx.font = "normal 10px Arial";
+							this.ctx.textAlign = "center";
+							if (ChartEnum.indexOf(" ") > 1) {
+								var LabelArray = ChartEnum.split(' ');
+								var label_y = this.canvas.height - 20 - ChartY;
+								for (var i = 0; i < LabelArray.length; i++) {
+									this.ctx.fillText(LabelArray[i], x - 20, label_y);
+									label_y = label_y + 10;
+								}
+							}
+							else {
+								this.ctx.fillText(ChartEnum, x  - 20, this.canvas.height - 20 - ChartY);
+							}
 						}
-						else {
-							this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), x + 10, y + 15);
-						}
+
+						// Number v on Each Bar
+						x = x - 10;
+						this.ctx.font = "normal 11px Arial";
+						this.ctx.textAlign = "center";
+						this.ctx.fillStyle = "rgba(0, 0, 255, 0.6)";
+						this.ctx.fillText(val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), x, y - 5);
+						
+						this.ctx.restore();
+						barIndex++;
+						ColorIndex++;
 					}
-					this.ctx.restore();
-					barIndex++;
 				}
+				
 				//drawing chart Title
 				this.ctx.save();
 				this.ctx.textBaseline = "bottom";
@@ -159,7 +165,7 @@ var MakeBarChart = function(d,c,t){
 			return (num / si[i].v).toFixed(0).replace(rx, "$1") + si[i].s;
 	}
 	
-	new BarChart({
+	new MultiBarChart({
 			padding:35
 		}).draw();
 }
