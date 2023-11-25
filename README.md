@@ -4,6 +4,10 @@ RAW Canvas Chart using Core Javascript and HTML only.
 
 > Note: JQuery is not used and CDN here are just for containers, actual chart never used any third-party plugin like Google Chart or ChartJS
 
+I have also created a separated script for each in any cases you only require only one.
+
+We have some bug on the chat whic I am fully aware feel free to fix and improve this project
+
 ![Sample Screenshot](/Sample_Preview.png "Preview")
 
 Included with few Colour Palettes to match your preference inside
