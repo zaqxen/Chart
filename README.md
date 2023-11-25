@@ -6,7 +6,7 @@ RAW Canvas Chart using Core Javascript and HTML only.
 
 I have also created a separated script for each in any cases you only require only one.
 
-We have some bug on the chat whic I am fully aware feel free to fix and improve this project
+We have some bug on the Pie Chart which I'm fully aware feel free to fix, fork, download and improve this project
 
 ![Sample Screenshot](/Sample_Preview.png "Preview")
 
